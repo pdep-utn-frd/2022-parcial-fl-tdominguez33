@@ -18,8 +18,8 @@ data Video = UnVideo {aparecen :: [String], duracion :: Int} deriving Show
 
 verVideos :: [Video] -> Jugador -> Jugador
 verVideos listaVideos (Jugador motivado habilidad)
-  | (duracionTotal listaVideos) > 1000 = (Jugador True (habilidad + (habilidad * multiplicadorHabilidad(cuantasVecesMaradona listaVideos))))
-  | otherwise = (Jugador False (habilidad + (habilidad * multiplicadorHabilidad(cuantasVecesMaradona listaVideos))))
+  | (duracionTotal listaVideos) > 1000 = (Jugador True (habilidad * multiplicadorHabilidad(cuantasVecesMaradona listaVideos)))
+  | otherwise = (Jugador False (habilidad * multiplicadorHabilidad(cuantasVecesMaradona listaVideos)))
 
 
 multiplicadorHabilidad :: Float -> Float
@@ -45,7 +45,7 @@ apareceMaradona (UnVideo listaApariciones duracion) =
 -- a que Haskell utiliza evalucacion perezosa en lugar de evaluacion diferida como la mayoria de 
 -- los lenguajes.
 -- A la hora de ejecutarlo la funcion no terminaria de ejecutarse nunca puesto que en este caso estamos evaluando
--- elemento a elemento obligando a Haskell a tratar con todos los valores, lo cual, por la naturaleza de la lista
+-- elemento a elemento obligando a Haskell a tratar con todos los valores, lo cual, por la naturaleza de la lista,
 -- jamas terminara.
 
 ---- Punto 3 ----
@@ -70,7 +70,7 @@ enQueCondiciones (Jugador motivado habilidad)
     | otherwise = habilidad
 
 ---- Punto 5 ----
---mejorOpcion :: (Jugador -> Jugador) -> (Jugador -> Jugador) -> Jugador
+mejorOpcion :: (Jugador -> Jugador) -> (Jugador -> Jugador) -> Jugador -> Jugador
 mejorOpcion ejercicio1 ejercicio2 jugador
     | (enQueCondiciones . ejercicio1) jugador > (enQueCondiciones . ejercicio2) jugador = ejercicio1 jugador
     | otherwise = ejercicio2 jugador
@@ -81,7 +81,7 @@ verListaDeVideos = verVideos listaVideos
 -- mejorOpcion practicaConPelota verListaDeVideos messi
 
 -- Respuesta:
--- Jugador {motivado = False, habilidad = 201.0}
+-- Jugador {motivado = False, habilidad = 101.0}
 
 -- Ejemplo 2 --
 practicaPelotaYPlay = ((jugarPlay callOfDuty) . practicaConPelota)
